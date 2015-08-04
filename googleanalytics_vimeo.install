@@ -1,0 +1,51 @@
+<?php
+/**
+ * @file
+ * Google Analytics Vimeo Install file.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function googleanalytics_vimeo_requirements($phase) {
+  $requirements = array();
+
+  if ($phase == 'runtime') {
+    $t = get_t();
+    $library = libraries_detect('vimeo.ga.js');
+    $error_message = isset($library['error message']) ? $library['error message'] : '';
+
+    if (empty($library['installed'])) {
+      $requirements['vimeo_ga_js'] = array(
+        'title' => $t('Google Analytics Vimeo Video Tracking Library'),
+        'value' => $t('Not installed'),
+        'severity' => REQUIREMENT_ERROR,
+        'description' => $t('!error You need to download the !vimeo.ga.js,' .
+          ' extract the archive and place the qrcode directory in the %path directory' .
+          ' on your server.', array(
+            '!error' => $error_message,
+            '!vimeo.ga.js' => l($t('Google Analytics Vimeo Video Tracking Library'), $library['download url']),
+            '%path' => 'sites/all/libraries',
+          )
+        ),
+      );
+    }
+    else {
+      $requirements['vimeo_ga_js'] = array(
+        'title' => $t('Google Analytics Vimeo Video Tracking Library'),
+        'severity' => REQUIREMENT_OK,
+        'value' => $t('Installed'),
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+ /**
+  * Implements hook_uninstall().
+  */
+function googleanalytics_vimeo_unistall() {
+	variable_del('googleanalytics_vimeo_visibility_options');
+	variable_del('googleanalytics_vimeo_visibility_pages');
+}

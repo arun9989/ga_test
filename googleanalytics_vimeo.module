@@ -1,13 +1,41 @@
 <?php
 /**
  * @file
- * ClickSpark.js.
+ * Google Analytics Vimeo Video Tracking.
  */
 
 /**
  * Define admin config url.
  */
 define("GOOGLEANALYTICS_VIMEO_CONFIG_PAGE_URL", "admin/config/googleanalytics_vimeo");
+
+/**
+ * Implements hook_menu().
+ */
+function googleanalytics_vimeo_menu() {
+  $items = array();
+  $items[GOOGLEANALYTICS_VIMEO_CONFIG_PAGE_URL] = array(
+    'title' => 'Google Analytics Vimeo Video Tracking',
+    'description' => 'Configure Google Analytics Vimeo',
+    'position' => 'right',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer google analytics'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  $items[GOOGLEANALYTICS_VIMEO_CONFIG_PAGE_URL . '/settings'] = array(
+    'title' => 'Google Analytics Vimeo Settings',
+    'description' => 'Configure Google Analytics Vimeo Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('googleanalytics_vimeo_settings'),
+    'access callback' => TRUE,
+    'access arguments' => array('administer google analytics'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'googleanalytics_vimeo.admin.inc',
+    'file path' => drupal_get_path('module', 'googleanalytics_vimeo'),
+  );
+  return $items;
+}
 
 /**
  * Implements hook_libraries_info().
@@ -18,13 +46,13 @@ function googleanalytics_vimeo_libraries_info() {
     'vendor url' => 'https://github.com/sanderheilbron/vimeo.ga.js',
     'download url' => 'https://github.com/sanderheilbron/vimeo.ga.js/archive/master.zip',
     'version arguments' => array(
-      'file' => 'vimeo.ga.js',
+      'file' => 'vimeo.ga.min.js',
       'pattern' => '/vimeo.ga.js \| v(\d+\.+\d+)/',
       'lines' => 2,
     ),
     'files' => array(
       'js' => array(
-        'vimeo.ga.js',
+        'vimeo.ga.min.js',
       ),
     ),
   );
@@ -36,7 +64,62 @@ function googleanalytics_vimeo_libraries_info() {
  */
 function googleanalytics_vimeo_page_alter(&$page) {
   $library = libraries_detect('vimeo.ga.js');
-  if (!empty($library['installed'])) {
+  $googleanalytics_vimeo_visibility_pages = googleanalytics_vimeo_visibility_pages();
+  if (!empty($library['installed']) && !empty($googleanalytics_vimeo_visibility_pages)) {
     libraries_load('vimeo.ga.js');
   }
+}
+
+/**
+ * Implements hook_js_alter() to move the js in to footer.
+ */
+function googleanalytics_vimeo_js_alter(&$javascript) {
+  if(isset($javascript['sites/all/libraries/vimeo.ga.js/vimeo.ga.min.js'])) {
+    $javascript['sites/all/libraries/vimeo.ga.js/vimeo.ga.min.js']['scope'] = 'footer';
+  }
+}
+
+/**
+ * Based on visibility setting this function returns TRUE/FALSE.
+ */
+function googleanalytics_vimeo_visibility_pages() {
+  static $page_match;
+
+  // Cache visibility result if function is called more than once.
+  if (!isset($page_match)) {
+
+    $visibility = variable_get('googleanalytics_vimeo_visibility_options', 0);
+    $setting_pages = variable_get('googleanalytics_vimeo_visibility_pages', GOOGLEANALYTICS_PAGES);
+
+    // Match path if necessary.
+    if (!empty($setting_pages)) {
+      // Convert path to lowercase. This allows comparison of the same path
+      // with different case. Ex: /Page, /page, /PAGE.
+      $pages = drupal_strtolower($setting_pages);
+      if ($visibility < 2) {
+        // Convert the Drupal path to lowercase.
+        $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+        // Compare the lowercase internal and lowercase path alias (if any).
+        $page_match = drupal_match_path($path, $pages);
+        if ($path != $_GET['q']) {
+          $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
+        }
+        // When $visibility has a value of 0, the tracking code is displayed on
+        // all pages except those listed in $pages. When set to 1, it
+        // is displayed only on those pages listed in $pages.
+        $page_match = !($visibility xor $page_match);
+      }
+      elseif (module_exists('php')) {
+        $page_match = php_eval($setting_pages);
+      }
+      else {
+        $page_match = FALSE;
+      }
+    }
+    else {
+      $page_match = TRUE;
+    }
+
+  }
+  return $page_match;
 }
