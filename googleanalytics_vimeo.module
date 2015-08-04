@@ -1,0 +1,42 @@
+<?php
+/**
+ * @file
+ * ClickSpark.js.
+ */
+
+/**
+ * Define admin config url.
+ */
+define("GOOGLEANALYTICS_VIMEO_CONFIG_PAGE_URL", "admin/config/googleanalytics_vimeo");
+
+/**
+ * Implements hook_libraries_info().
+ */
+function googleanalytics_vimeo_libraries_info() {
+  $libraries['vimeo.ga.js'] = array(
+    'name' => 'Google Analytics Vimeo Video Tracking',
+    'vendor url' => 'https://github.com/sanderheilbron/vimeo.ga.js',
+    'download url' => 'https://github.com/sanderheilbron/vimeo.ga.js/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'vimeo.ga.js',
+      'pattern' => '/vimeo.ga.js \| v(\d+\.+\d+)/',
+      'lines' => 2,
+    ),
+    'files' => array(
+      'js' => array(
+        'vimeo.ga.js',
+      ),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
+ */
+function googleanalytics_vimeo_page_alter(&$page) {
+  $library = libraries_detect('vimeo.ga.js');
+  if (!empty($library['installed'])) {
+    libraries_load('vimeo.ga.js');
+  }
+}
