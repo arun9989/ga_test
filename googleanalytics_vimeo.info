@@ -5,7 +5,7 @@ description = A Google Analytics plugin for measuring Vimeo Player Events.
 dependencies[] = libraries
 dependencies[] = googleanalytics
 
-configure = admin/config/google_analytics_vimeo/settings
+configure = admin/config/googleanalytics_vimeo/settings
 
 package = Statistics
 
