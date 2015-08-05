@@ -47,7 +47,7 @@ function googleanalytics_vimeo_requirements($phase) {
  */
 function googleanalytics_vimeo_install() {
   $library = libraries_detect('vimeo.ga.js');
-  if(isset($library['error message'])) {
+  if (isset($library['error message'])) {
     drupal_set_message($library['error message'], 'error');
   }
 }

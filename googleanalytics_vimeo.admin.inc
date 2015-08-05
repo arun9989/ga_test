@@ -9,9 +9,9 @@
  */
 function googleanalytics_vimeo_settings() {
   $form['googleanalytics_vimeo_tracking_options'] = array(
-    '#type' => 'fieldset', 
+    '#type' => 'fieldset',
     '#title' => t('Select Tracking'),
-    '#collapsible' => FALSE, 
+    '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );
   $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_progress25'] = array(
