@@ -67,7 +67,16 @@ function googleanalytics_vimeo_page_alter(&$page) {
   $googleanalytics_vimeo_visibility_pages = googleanalytics_vimeo_visibility_pages();
   if (!empty($library['installed']) && !empty($googleanalytics_vimeo_visibility_pages)) {
     libraries_load('vimeo.ga.js');
+    drupal_add_js(drupal_get_path('module', 'googleanalytics_vimeo') . '/googleanalytics_vimeo.js', array('scope' => 'footer'));
   }
+  drupal_add_js(array('googleanalytics_vimeo' => array('progress25' => variable_get('googleanalytics_vimeo_progress25', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('progress50' => variable_get('googleanalytics_vimeo_progress50', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('progress75' => variable_get('googleanalytics_vimeo_progress75', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('videoPlayed' => variable_get('googleanalytics_vimeo_videoPlayed', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('videoPaused' => variable_get('googleanalytics_vimeo_videoPaused', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('videoResumed' => variable_get('googleanalytics_vimeo_videoResumed', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('videoSeeking' => variable_get('googleanalytics_vimeo_videoSeeking', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('videoCompleted' => variable_get('googleanalytics_vimeo_videoCompleted', FALSE))), array('type' => 'setting'));
 }
 
 /**

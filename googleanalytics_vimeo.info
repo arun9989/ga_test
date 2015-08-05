@@ -7,4 +7,6 @@ dependencies[] = googleanalytics
 
 configure = admin/config/google_analytics_vimeo/settings
 
+package = Statistics
+
 core = 7.x

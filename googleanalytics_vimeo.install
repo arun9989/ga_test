@@ -42,10 +42,28 @@ function googleanalytics_vimeo_requirements($phase) {
   return $requirements;
 }
 
- /**
-  * Implements hook_uninstall().
-  */
-function googleanalytics_vimeo_unistall() {
-	variable_del('googleanalytics_vimeo_visibility_options');
-	variable_del('googleanalytics_vimeo_visibility_pages');
+/**
+ * Implements hook_install().
+ */
+function googleanalytics_vimeo_install() {
+  $library = libraries_detect('vimeo.ga.js');
+  if(isset($library['error message'])) {
+    drupal_set_message($library['error message'], 'error');
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function googleanalytics_vimeo_uninstall() {
+  variable_del('googleanalytics_vimeo_progress25');
+  variable_del('googleanalytics_vimeo_progress50');
+  variable_del('googleanalytics_vimeo_progress75');
+  variable_del('googleanalytics_vimeo_videoPlayed');
+  variable_del('googleanalytics_vimeo_videoPaused');
+  variable_del('googleanalytics_vimeo_videoResumed');
+  variable_del('googleanalytics_vimeo_videoSeeking');
+  variable_del('googleanalytics_vimeo_videoCompleted');
+  variable_del('googleanalytics_vimeo_visibility_options');
+  variable_del('googleanalytics_vimeo_visibility_pages');
 }
