@@ -61,7 +61,6 @@ function googleanalytics_vimeo_libraries_info() {
 
 /**
  * Implements hook_page_alter().
- * To insert JavaScript to the appropriate scope/region of the page.
  */
 function googleanalytics_vimeo_page_alter(&$page) {
   $library = libraries_detect('vimeo.ga.js');
@@ -82,7 +81,6 @@ function googleanalytics_vimeo_page_alter(&$page) {
 
 /**
  * Implements hook_js_alter().
- * To move the js in to footer.
  */
 function googleanalytics_vimeo_js_alter(&$javascript) {
   if (isset($javascript['sites/all/libraries/vimeo.ga.js/vimeo.ga.min.js'])) {

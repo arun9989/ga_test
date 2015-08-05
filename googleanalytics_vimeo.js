@@ -22,8 +22,8 @@
 
           var enable_api = '?api=1&player_id=vimeo-player-' + index;
 
-          if (isrc.indexOf("?") != -1){
-          	enable_api = '&api=1&player_id=vimeo-player-' + index;
+          if (isrc.indexOf("?") != -1) {
+            enable_api = '&api=1&player_id=vimeo-player-' + index;
           }
 
           $(iframe).addClass('google-analytics-vimeo-processed');
