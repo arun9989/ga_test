@@ -3,7 +3,7 @@
  * Googleanalytics_vimeo.js.
  */
 
-(function($) {
+(function ($) {
 
   var vimeo_iframes = {};
   vimeo_iframes = $('iframe');
@@ -15,14 +15,14 @@
   });
 
   Drupal.behaviors.GoogleAnalyticsVimeo = {
-    attach: function(context, settings) {
+    attach: function (context, settings) {
       $.each(vimeo_iframes, function (index, iframe) {
         var isrc = $(iframe).attr('src');
         if (isrc.indexOf('player.vimeo.com') > -1 && !$(iframe).hasClass('google-analytics-vimeo-processed')) {
 
           var enable_api = '?api=1&player_id=vimeo-player-' + index;
 
-          if (isrc.indexOf("?") != -1) {
+          if (isrc.indexOf("?") !== -1) {
             enable_api = '&api=1&player_id=vimeo-player-' + index;
           }
 

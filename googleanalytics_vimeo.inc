@@ -8,7 +8,7 @@
  * Pass admin config values to Drupal js.
  */
 function googleanalytics_vimeo_admin_config_js() {
-	drupal_add_js(array('googleanalytics_vimeo' => array('progress25' => variable_get('googleanalytics_vimeo_progress25', FALSE))), array('type' => 'setting'));
+  drupal_add_js(array('googleanalytics_vimeo' => array('progress25' => variable_get('googleanalytics_vimeo_progress25', FALSE))), array('type' => 'setting'));
   drupal_add_js(array('googleanalytics_vimeo' => array('progress50' => variable_get('googleanalytics_vimeo_progress50', FALSE))), array('type' => 'setting'));
   drupal_add_js(array('googleanalytics_vimeo' => array('progress75' => variable_get('googleanalytics_vimeo_progress75', FALSE))), array('type' => 'setting'));
   drupal_add_js(array('googleanalytics_vimeo' => array('videoPlayed' => variable_get('googleanalytics_vimeo_videoPlayed', FALSE))), array('type' => 'setting'));

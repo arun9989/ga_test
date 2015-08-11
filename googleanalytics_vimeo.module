@@ -77,7 +77,7 @@ function googleanalytics_vimeo_page_alter(&$page) {
  * Implements hook_js_alter().
  */
 function googleanalytics_vimeo_js_alter(&$javascript) {
-  $library_path =  libraries_get_path('vimeo.ga.js');
+  $library_path = libraries_get_path('vimeo.ga.js');
   if (isset($javascript[$library_path . '/vimeo.ga.min.js'])) {
     $javascript[$library_path . '/vimeo.ga.min.js']['scope'] = 'footer';
   }
