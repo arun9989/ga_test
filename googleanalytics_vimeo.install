@@ -21,11 +21,11 @@ function googleanalytics_vimeo_requirements($phase) {
         'value' => $t('Not installed'),
         'severity' => REQUIREMENT_ERROR,
         'description' => $t('!error You need to download the !vimeo.ga.js,' .
-          ' extract the archive and place the qrcode directory in the %path directory' .
+          ' extract the archive and place the vimeo.ga.js directory in the %path directory' .
           ' on your server.', array(
             '!error' => $error_message,
             '!vimeo.ga.js' => l($t('Google Analytics Vimeo Video Tracking Library'), $library['download url']),
-            '%path' => 'sites/all/libraries',
+            '%path' => libraries_get_path('vimeo.ga.js'),
           )
         ),
       );
