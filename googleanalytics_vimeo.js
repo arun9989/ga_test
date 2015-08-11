@@ -5,6 +5,8 @@
 
 (function ($) {
 
+  "use strict";
+
   var vimeo_iframes = {};
   vimeo_iframes = $('iframe');
   $.each(vimeo_iframes, function (index, iframe) {
@@ -45,5 +47,5 @@
         iframe.videoCompleted = !Drupal.settings.googleanalytics_vimeo.videoCompleted;
       });
     }
-  }
+  };
 })(jQuery);
