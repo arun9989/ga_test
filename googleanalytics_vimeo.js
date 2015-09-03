@@ -7,17 +7,16 @@
 
   "use strict";
 
-  var vimeo_iframes = {};
-  vimeo_iframes = $('iframe');
-  $.each(vimeo_iframes, function (index, iframe) {
-    var isrc = $(iframe).attr('src');
-    if (isrc.indexOf('player.vimeo.com') > -1 && !$(iframe).hasClass('google-analytics-vimeo-processed')) {
-      iframe.setAttribute('id', 'vimeo-player-' + index);
-    }
-  });
-
   Drupal.behaviors.GoogleAnalyticsVimeo = {
     attach: function (context, settings) {
+      var vimeo_iframes = {};
+      vimeo_iframes = $('iframe');
+      $.each(vimeo_iframes, function (index, iframe) {
+        var isrc = $(iframe).attr('src');
+        if (isrc.indexOf('player.vimeo.com') > -1 && !$(iframe).hasClass('google-analytics-vimeo-processed')) {
+          iframe.setAttribute('id', 'vimeo-player-' + index);
+        }
+      });
       $.each(vimeo_iframes, function (index, iframe) {
         var isrc = $(iframe).attr('src');
         if (isrc.indexOf('player.vimeo.com') > -1 && !$(iframe).hasClass('google-analytics-vimeo-processed')) {
