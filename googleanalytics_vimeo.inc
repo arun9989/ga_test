@@ -10,16 +10,17 @@
 function googleanalytics_vimeo_admin_config_js() {
   $opts = array_filter(variable_get('googleanalytics_vimeo_tracking_options', array()));
   drupal_add_js(array(
-    'googleanalytics_vimeo' => array(
-      'progress25' => isset($opts['googleanalytics_vimeo_progress25']),
-      'progress50' => isset($opts['googleanalytics_vimeo_progress50']),
-      'progress75' => isset($opts['googleanalytics_vimeo_progress75']),
-      'videoPlayed' => isset($opts['googleanalytics_vimeo_videoPlayed']),
-      'videoPaused' => isset($opts['googleanalytics_vimeo_videoPaused']),
-      'videoResumed' => isset($opts['googleanalytics_vimeo_videoResumed']),
-      'videoSeeking' => isset($opts['googleanalytics_vimeo_videoSeeking']),
-      'videoCompleted' => isset($opts['googleanalytics_vimeo_videoCompleted'])
-    )),
+      'googleanalytics_vimeo' => array(
+        'progress25' => isset($opts['googleanalytics_vimeo_progress25']),
+        'progress50' => isset($opts['googleanalytics_vimeo_progress50']),
+        'progress75' => isset($opts['googleanalytics_vimeo_progress75']),
+        'videoPlayed' => isset($opts['googleanalytics_vimeo_videoPlayed']),
+        'videoPaused' => isset($opts['googleanalytics_vimeo_videoPaused']),
+        'videoResumed' => isset($opts['googleanalytics_vimeo_videoResumed']),
+        'videoSeeking' => isset($opts['googleanalytics_vimeo_videoSeeking']),
+        'videoCompleted' => isset($opts['googleanalytics_vimeo_videoCompleted']),
+      )
+    ),
     'setting'
   );
 }
