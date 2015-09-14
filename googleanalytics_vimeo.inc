@@ -19,7 +19,7 @@ function googleanalytics_vimeo_admin_config_js() {
         'videoResumed' => isset($opts['googleanalytics_vimeo_videoResumed']),
         'videoSeeking' => isset($opts['googleanalytics_vimeo_videoSeeking']),
         'videoCompleted' => isset($opts['googleanalytics_vimeo_videoCompleted']),
-      )
+      ),
     ),
     'setting'
   );
