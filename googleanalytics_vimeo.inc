@@ -8,20 +8,27 @@
  * Pass admin config values to Drupal js.
  */
 function googleanalytics_vimeo_admin_config_js() {
-  drupal_add_js(array('googleanalytics_vimeo' => array('progress25' => variable_get('googleanalytics_vimeo_progress25', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('progress50' => variable_get('googleanalytics_vimeo_progress50', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('progress75' => variable_get('googleanalytics_vimeo_progress75', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('videoPlayed' => variable_get('googleanalytics_vimeo_videoPlayed', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('videoPaused' => variable_get('googleanalytics_vimeo_videoPaused', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('videoResumed' => variable_get('googleanalytics_vimeo_videoResumed', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('videoSeeking' => variable_get('googleanalytics_vimeo_videoSeeking', FALSE))), array('type' => 'setting'));
-  drupal_add_js(array('googleanalytics_vimeo' => array('videoCompleted' => variable_get('googleanalytics_vimeo_videoCompleted', FALSE))), array('type' => 'setting'));
+  $opts = array_filter(variable_get('googleanalytics_vimeo_tracking_options', array()));
+  drupal_add_js(array(
+    'googleanalytics_vimeo' => array(
+      'progress25' => isset($opts['googleanalytics_vimeo_progress25']),
+      'progress50' => isset($opts['googleanalytics_vimeo_progress50']),
+      'progress75' => isset($opts['googleanalytics_vimeo_progress75']),
+      'videoPlayed' => isset($opts['googleanalytics_vimeo_videoPlayed']),
+      'videoPaused' => isset($opts['googleanalytics_vimeo_videoPaused']),
+      'videoResumed' => isset($opts['googleanalytics_vimeo_videoResumed']),
+      'videoSeeking' => isset($opts['googleanalytics_vimeo_videoSeeking']),
+      'videoCompleted' => isset($opts['googleanalytics_vimeo_videoCompleted'])
+    )),
+    'setting'
+  );
 }
 /**
  * Based on visibility setting this function returns TRUE/FALSE.
  */
 function googleanalytics_vimeo_visibility_pages() {
   static $page_match;
+  $php_access = user_access('use PHP for vimeo tracking visibility');
 
   // Cache visibility result if function is called more than once.
   if (!isset($page_match)) {
@@ -47,7 +54,7 @@ function googleanalytics_vimeo_visibility_pages() {
         // is displayed only on those pages listed in $pages.
         $page_match = !($visibility xor $page_match);
       }
-      elseif (module_exists('php')) {
+      elseif (module_exists('php') && $php_access) {
         $page_match = php_eval($setting_pages);
       }
       else {

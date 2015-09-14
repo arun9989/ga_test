@@ -10,16 +10,12 @@
   Drupal.behaviors.GoogleAnalyticsVimeo = {
     attach: function (context, settings) {
       var vimeo_iframes = {};
-      vimeo_iframes = $('iframe');
+      vimeo_iframes = $('iframe[src*="player.vimeo.com"]');
       $.each(vimeo_iframes, function (index, iframe) {
         var isrc = $(iframe).attr('src');
-        if (isrc.indexOf('player.vimeo.com') > -1 && !$(iframe).hasClass('google-analytics-vimeo-processed')) {
+        if (!$(iframe).hasClass('google-analytics-vimeo-processed')) {
+
           iframe.setAttribute('id', 'vimeo-player-' + index);
-        }
-      });
-      $.each(vimeo_iframes, function (index, iframe) {
-        var isrc = $(iframe).attr('src');
-        if (isrc.indexOf('player.vimeo.com') > -1 && !$(iframe).hasClass('google-analytics-vimeo-processed')) {
 
           var enable_api = '?api=1&player_id=vimeo-player-' + index;
 

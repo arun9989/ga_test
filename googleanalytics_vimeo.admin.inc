@@ -8,68 +8,35 @@
  * Google Analytics Vimeo settings.
  */
 function googleanalytics_vimeo_settings() {
-  $form['googleanalytics_vimeo_tracking_options'] = array(
+  $form['googleanalytics_vimeo_tracking'] = array(
     '#type' => 'fieldset',
     '#title' => t('Select Tracking'),
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_progress25'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('25% Progress'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_progress25', FALSE),
+  $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Enable Tracking'),
+    '#options' => array(
+      'googleanalytics_vimeo_progress25' => t('25% Progress'),
+      'googleanalytics_vimeo_progress50' => t('50% Progress'),
+      'googleanalytics_vimeo_progress75' => t('75% Progress'),
+      'googleanalytics_vimeo_videoPlayed' => t('Video Played'),
+      'googleanalytics_vimeo_videoPaused' => t('Video Paused'),
+      'googleanalytics_vimeo_videoResumed' => t('Video Resumed'),
+      'googleanalytics_vimeo_videoSeeking' => t('Video Seeking'),
+      'googleanalytics_vimeo_videoCompleted' => t('Video Completed'),
+    ),
   );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_progress50'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('50% Progress'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_progress50', FALSE),
-  );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_progress75'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('75% Progress'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_progress75', FALSE),
-  );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_videoPlayed'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Video Played'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_videoPlayed', FALSE),
-  );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_videoPaused'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Video Paused'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_videoPaused', FALSE),
-  );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_videoResumed'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Video Resumed'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_videoResumed', FALSE),
-  );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_videoSeeking'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Video Seeking'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_videoSeeking', FALSE),
-  );
-  $form['googleanalytics_vimeo_tracking_options']['googleanalytics_vimeo_videoCompleted'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Video Completed'),
-    '#return_value' => TRUE,
-    '#default_value' => variable_get('googleanalytics_vimeo_videoCompleted', FALSE),
-  );
+  $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options']['#default_value'] = array_keys(array_filter(variable_get('googleanalytics_vimeo_tracking_options', $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options']['#options'])));
   // Page specific visibility configurations.
-  $php_access = user_access('use text format php_code');
+  $php_access = user_access('use PHP for vimeo tracking visibility');
   $visibility = variable_get('googleanalytics_vimeo_visibility_options', 0);
   $pages = variable_get('googleanalytics_vimeo_visibility_pages', GOOGLEANALYTICS_PAGES);
   $options = array();
   $title = '';
   $description = '';
-  if ($visibility == 2 && !$php_access) {
+  if ($visibility == GOOGLEANALYTICS_VIMEO_USE_PHP_FOR_TRACKING && !$php_access) {
     $form['googleanalytics_vimeo_visibility_options'] = array('#type' => 'value', '#value' => 1);
     $form['googleanalytics_vimeo_visibility_pages'] = array('#type' => 'value', '#value' => $pages);
   }

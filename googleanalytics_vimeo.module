@@ -8,6 +8,7 @@
  * Define admin config url.
  */
 define("GOOGLEANALYTICS_VIMEO_CONFIG_PAGE_URL", "admin/config/googleanalytics_vimeo");
+define("GOOGLEANALYTICS_VIMEO_USE_PHP_FOR_TRACKING", 2);
 
 /**
  * Implements hook_menu().
@@ -68,7 +69,12 @@ function googleanalytics_vimeo_page_alter(&$page) {
   $googleanalytics_vimeo_visibility_pages = googleanalytics_vimeo_visibility_pages();
   if (!empty($library['installed']) && !empty($googleanalytics_vimeo_visibility_pages)) {
     libraries_load('vimeo.ga.js');
-    drupal_add_js(drupal_get_path('module', 'googleanalytics_vimeo') . '/googleanalytics_vimeo.js', array('scope' => 'footer'));
+    $googleanalytics_vimeo_js = drupal_get_path('module', 'googleanalytics_vimeo') . '/googleanalytics_vimeo.js';
+    $page['content']['#attached']['js'][] = array(
+      'data' => $googleanalytics_vimeo_js,
+      'type' => 'file',
+      'scope' => 'footer',
+    );
   }
   googleanalytics_vimeo_admin_config_js();
 }
@@ -81,4 +87,24 @@ function googleanalytics_vimeo_js_alter(&$javascript) {
   if (isset($javascript[$library_path . '/vimeo.ga.min.js'])) {
     $javascript[$library_path . '/vimeo.ga.min.js']['scope'] = 'footer';
   }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function googleanalytics_vimeo_permission() {
+  return array(
+    'use PHP for vimeo tracking visibility' => array(
+      'title' => t('Use PHP for vimeo tracking visibility'),
+      'description' => t('Enter PHP code in the field for vimeo video tracking visibility settings.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_paranoia_hide_permissions().
+ */
+function googleanalytics_vimeo_paranoia_hide_permissions() {
+  return array('use PHP for vimeo tracking visibility');
 }
