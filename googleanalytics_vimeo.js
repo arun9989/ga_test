@@ -30,8 +30,8 @@
           iframe.setAttribute('data-bounce', true);
         }
       });
-      vimeoGAJS.init();
-      $.each(vimeoGAJS.eventMarker, function (index, iframe) {
+      window.vimeoGAJS.init();
+      $.each(window.vimeoGAJS.eventMarker, function (index, iframe) {
         iframe.progress25 = !Drupal.settings.googleanalytics_vimeo.progress25;
         iframe.progress50 = !Drupal.settings.googleanalytics_vimeo.progress50;
         iframe.progress75 = !Drupal.settings.googleanalytics_vimeo.progress75;

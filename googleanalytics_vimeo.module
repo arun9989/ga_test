@@ -29,7 +29,6 @@ function googleanalytics_vimeo_menu() {
     'description' => 'Configure Google Analytics Vimeo Settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('googleanalytics_vimeo_settings'),
-    'access callback' => TRUE,
     'access arguments' => array('administer google analytics'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'googleanalytics_vimeo.admin.inc',
