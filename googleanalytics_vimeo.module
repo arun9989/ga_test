@@ -62,7 +62,7 @@ function googleanalytics_vimeo_libraries_info() {
 /**
  * Implements hook_page_alter().
  */
-function googleanalytics_vimeo_page_alter(&$page) {
+function googleanalytics_vimeo_page_build(&$page) {
   module_load_include('inc', 'googleanalytics_vimeo', 'googleanalytics_vimeo');
   $library = libraries_detect('vimeo.ga.js');
   $googleanalytics_vimeo_visibility_pages = googleanalytics_vimeo_visibility_pages();
@@ -76,16 +76,6 @@ function googleanalytics_vimeo_page_alter(&$page) {
     );
   }
   googleanalytics_vimeo_admin_config_js();
-}
-
-/**
- * Implements hook_js_alter().
- */
-function googleanalytics_vimeo_js_alter(&$javascript) {
-  $library_path = libraries_get_path('vimeo.ga.js');
-  if (isset($javascript[$library_path . '/vimeo.ga.min.js'])) {
-    $javascript[$library_path . '/vimeo.ga.min.js']['scope'] = 'footer';
-  }
 }
 
 /**
