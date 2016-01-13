@@ -32,14 +32,14 @@
       });
       window.vimeoGAJS.init();
       $.each(window.vimeoGAJS.eventMarker, function (index, iframe) {
-        iframe.progress25 = !Drupal.settings.googleanalytics_vimeo.progress25;
-        iframe.progress50 = !Drupal.settings.googleanalytics_vimeo.progress50;
-        iframe.progress75 = !Drupal.settings.googleanalytics_vimeo.progress75;
-        iframe.videoPlayed = !Drupal.settings.googleanalytics_vimeo.videoPlayed;
-        iframe.videoPaused = !Drupal.settings.googleanalytics_vimeo.videoPaused;
-        iframe.videoResumed = !Drupal.settings.googleanalytics_vimeo.videoResumed;
-        iframe.videoSeeking = !Drupal.settings.googleanalytics_vimeo.videoSeeking;
-        iframe.videoCompleted = !Drupal.settings.googleanalytics_vimeo.videoCompleted;
+        iframe.progress25 = !drupalSettings.data.google_analytics_vimeo.progress25;
+        iframe.progress50 = !drupalSettings.data.google_analytics_vimeo.progress50;
+        iframe.progress75 = !drupalSettings.data.google_analytics_vimeo.progress75;
+        iframe.videoPlayed = !drupalSettings.data.google_analytics_vimeo.videoPlayed;
+        iframe.videoPaused = !drupalSettings.data.google_analytics_vimeo.videoPaused;
+        iframe.videoResumed = !drupalSettings.data.google_analytics_vimeo.videoResumed;
+        iframe.videoSeeking = !drupalSettings.data.google_analytics_vimeo.videoSeeking;
+        iframe.videoCompleted = !drupalSettings.data.google_analytics_vimeo.videoCompleted;
       });
     }
   };
