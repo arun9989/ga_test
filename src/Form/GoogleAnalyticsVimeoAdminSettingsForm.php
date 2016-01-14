@@ -3,12 +3,15 @@
  * @file
  * Google Analytics Vimeo Video Tracking Admin Settings Form.
  */
- 
+
 namespace Drupal\google_analytics_vimeo\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Displays the Google Analytics Vimeo settings form.
+ */
 class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
@@ -51,7 +54,7 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
     $options = array();
     $title = '';
     $description = '';
-  
+
     if ($visibility_mode == GOOGLEANALYTICS_VIMEO_USE_PHP_FOR_TRACKING && !$php_access) {
       $form['googleanalytics_vimeo_visibility_options'] = array('#type' => 'value', '#value' => 1);
       $form['googleanalytics_vimeo_visibility_pages'] = array('#type' => 'value', '#value' => $pages);
@@ -90,8 +93,8 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
       '#wysiwyg' => FALSE,
       '#rows' => 10,
     );
-	
-	return parent::buildForm($form, $form_state);	
+
+    return parent::buildForm($form, $form_state);	
   }
   /**
    * {@inheritdoc}
@@ -99,10 +102,10 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     \Drupal::configFactory()->getEditable('google_analytics_vimeo.admin_settings')
-    ->set('visibility.tracking_options', $values['googleanalytics_vimeo_tracking_options'])
-    ->set('visibility.visibility_mode', $values['googleanalytics_vimeo_visibility_options'])
-	->set('visibility.request_path_pages', $values['googleanalytics_vimeo_visibility_pages'])
-    ->save();
+      ->set('visibility.tracking_options', $values['googleanalytics_vimeo_tracking_options'])
+      ->set('visibility.visibility_mode', $values['googleanalytics_vimeo_visibility_options'])
+      ->set('visibility.request_path_pages', $values['googleanalytics_vimeo_visibility_pages'])
+      ->save();
     return parent::submitForm($form, $form_state);
   }
   /**
