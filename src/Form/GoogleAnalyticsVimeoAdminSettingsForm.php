@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Google Analytics Vimeo Video Tracking Admin Settings Form.
+ */
+ 
 namespace Drupal\google_analytics_vimeo\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -7,11 +12,11 @@ use Drupal\Core\Form\FormStateInterface;
 class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
-   */	
+   */
   public function getFormId() {
     return 'google_analytics_vimeo_settings';
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -23,7 +28,7 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     );
-	$form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options'] = array(
+    $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Enable Tracking'),
       '#options' => array(
@@ -38,53 +43,53 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
       ),
     );
     $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options']['#default_value'] = array_keys(array_filter($config->get('visibility.tracking_options')));
-	// Page specific visibility configurations.
-	$account = \Drupal::currentUser();
-  $php_access = $account->hasPermission('use PHP for vimeo tracking visibility');
-  $visibility_mode = $config->get('visibility.visibility_mode');
-  $pages = $config->get('visibility.request_path_pages');
-  $options = array();
-  $title = '';
-  $description = '';
+    // Page specific visibility configurations.
+    $account = \Drupal::currentUser();
+    $php_access = $account->hasPermission('use PHP for vimeo tracking visibility');
+    $visibility_mode = $config->get('visibility.visibility_mode');
+    $pages = $config->get('visibility.request_path_pages');
+    $options = array();
+    $title = '';
+    $description = '';
   
-  if ($visibility_mode == GOOGLEANALYTICS_VIMEO_USE_PHP_FOR_TRACKING && !$php_access) {
-    $form['googleanalytics_vimeo_visibility_options'] = array('#type' => 'value', '#value' => 1);
-    $form['googleanalytics_vimeo_visibility_pages'] = array('#type' => 'value', '#value' => $pages);
-  }
-  else {
-    $options = array(
-      t('Every page except the listed pages'),
-      t('The listed pages only'),
-    );
-    $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array(
-      '%blog' => 'blog',
-      '%blog-wildcard' => 'blog/*',
-      '%front' => '<front>',
-    ));
-    if (\Drupal::moduleHandler()->moduleExists('php') && $php_access) {
-      $options[] = t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
-      $title = t('Pages or PHP code');
-      $description .= ' ' . t('If the PHP option is chosen, enter PHP code between %php. Note that executing incorrect PHP code can break your Drupal site.', array('%php' => '<?php ?>'));
+    if ($visibility_mode == GOOGLEANALYTICS_VIMEO_USE_PHP_FOR_TRACKING && !$php_access) {
+      $form['googleanalytics_vimeo_visibility_options'] = array('#type' => 'value', '#value' => 1);
+      $form['googleanalytics_vimeo_visibility_pages'] = array('#type' => 'value', '#value' => $pages);
     }
     else {
-      $title = t('Pages');
+      $options = array(
+        t('Every page except the listed pages'),
+        t('The listed pages only'),
+      );
+      $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array(
+        '%blog' => 'blog',
+        '%blog-wildcard' => 'blog/*',
+        '%front' => '<front>',
+      ));
+      if (\Drupal::moduleHandler()->moduleExists('php') && $php_access) {
+        $options[] = t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
+        $title = t('Pages or PHP code');
+        $description .= ' ' . t('If the PHP option is chosen, enter PHP code between %php. Note that executing incorrect PHP code can break your Drupal site.', array('%php' => '<?php ?>'));
+      }
+      else {
+        $title = t('Pages');
+      }
     }
-  }
-  $form['googleanalytics_vimeo_visibility_options'] = array(
-    '#type' => 'radios',
-    '#title' => t('Add Google Analytics Vimeo Video Tracking to specific pages'),
-    '#options' => $options,
-    '#default_value' => !empty($visibility_mode) ? $visibility_mode : 0,
-  );
-  $form['googleanalytics_vimeo_visibility_pages'] = array(
-    '#type' => 'textarea',
-    '#title' => $title,
-	'#title_display' => 'invisible',
-    '#default_value' => !empty($pages) ? $pages : '',
-    '#description' => $description,
-    '#wysiwyg' => FALSE,
-    '#rows' => 10,
-  );
+    $form['googleanalytics_vimeo_visibility_options'] = array(
+      '#type' => 'radios',
+      '#title' => t('Add Google Analytics Vimeo Video Tracking to specific pages'),
+      '#options' => $options,
+      '#default_value' => !empty($visibility_mode) ? $visibility_mode : 0,
+    );
+    $form['googleanalytics_vimeo_visibility_pages'] = array(
+      '#type' => 'textarea',
+      '#title' => $title,
+      '#title_display' => 'invisible',
+      '#default_value' => !empty($pages) ? $pages : '',
+      '#description' => $description,
+      '#wysiwyg' => FALSE,
+      '#rows' => 10,
+    );
 	
 	return parent::buildForm($form, $form_state);	
   }
@@ -106,4 +111,5 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
   public function getEditableConfigNames() {
     return ['google_analytics_vimeo.admin_settings'];
   }
+
 }

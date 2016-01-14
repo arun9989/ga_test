@@ -5,7 +5,7 @@
  */
 
 use Drupal\Core\Url;
- 
+
 /**
  * Implements hook_requirements().
  */
@@ -16,7 +16,7 @@ function google_analytics_vimeo_requirements($phase) {
       $library = libraries_detect('vimeo.ga.js');
       $error_message = isset($library['error message']) ? $library['error message'] : '';
       $library_download_url = Url::fromUri($library['download url']);
-	  $library_download_link = \Drupal::l(t('Google Analytics Vimeo Video Tracking Library'), $library_download_url);
+      $library_download_link = \Drupal::l(t('Google Analytics Vimeo Video Tracking Library'), $library_download_url);
       if (empty($library['installed'])) {
         $requirements['vimeo_ga_js'] = array(
           'title' => t('Google Analytics Vimeo Video Tracking Library'),
@@ -39,14 +39,14 @@ function google_analytics_vimeo_requirements($phase) {
       }
     }
   }
-  
+
   return $requirements;
 }
 
 /**
  * Implements hook_install().
  */
-function googleanalytics_vimeo_install() {
+function google_analytics_vimeo_install() {
   $library = libraries_detect('vimeo.ga.js');
   if (isset($library['error message'])) {
     drupal_set_message($library['error message'], 'error');
