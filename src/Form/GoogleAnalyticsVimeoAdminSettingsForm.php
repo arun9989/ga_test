@@ -94,7 +94,7 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
       '#rows' => 10,
     );
 
-    return parent::buildForm($form, $form_state);	
+    return parent::buildForm($form, $form_state);
   }
   /**
    * {@inheritdoc}

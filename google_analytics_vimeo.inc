@@ -32,8 +32,8 @@ function google_analytics_vimeo_visibility_pages() {
         $path_alias = Unicode::strtolower(\Drupal::service('path.alias_manager')->getAliasByPath($path));
         $page_match = \Drupal::service('path.matcher')->matchPath($path_alias, $pages) ||
         (($path != $path_alias) && \Drupal::service('path.matcher')->matchPath($path, $pages));
-        // When $visibility_mode has a value of 0, the tracking code is 
-        // displayed on all pages except those listed in $pages. When 
+        // When $visibility_mode has a value of 0, the tracking code is
+        // displayed on all pages except those listed in $pages. When
         // set to 1, it is displayed only on those pages listed in $pages.
         $page_match = !($visibility_mode xor $page_match);
       }
