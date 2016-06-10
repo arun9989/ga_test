@@ -5,6 +5,11 @@
  */
 
 /**
+ * Define Use PHP for tracking constant.
+ */
+define("GOOGLEANALYTICS_VIMEO_USE_PHP_FOR_TRACKING", 2);
+
+/**
  * Implements hook_page_attachments().
  *
  * Insert JavaScript to the appropriate scope/region of the page.
@@ -17,14 +22,14 @@ function google_analytics_vimeo_page_attachments(array &$page) {
   $tracking_options = !empty($tracking_options) ? array_filter($tracking_options) : array();
 
   $page['#attached']['drupalSettings']['data']['google_analytics_vimeo'] = array(
-    'progress25'     => $tracking_options['googleanalytics_vimeo_progress25'],
-    'progress50'     => $tracking_options['googleanalytics_vimeo_progress50'],
-    'progress75'     => $tracking_options['googleanalytics_vimeo_progress75'],
-    'videoPlayed'    => $tracking_options['googleanalytics_vimeo_videoPlayed'],
-    'videoPaused'    => $tracking_options['googleanalytics_vimeo_videoPaused'],
-    'videoResumed'   => $tracking_options['googleanalytics_vimeo_videoResumed'],
-    'videoSeeking'   => $tracking_options['googleanalytics_vimeo_videoSeeking'],
-    'videoCompleted' => $tracking_options['googleanalytics_vimeo_videoCompleted'],
+    'progress25'     => !empty($tracking_options['googleanalytics_vimeo_progress25']) ? $tracking_options['googleanalytics_vimeo_progress25'] : '',
+    'progress50'     => !empty($tracking_options['googleanalytics_vimeo_progress50']) ? $tracking_options['googleanalytics_vimeo_progress50'] : '',
+    'progress75'     => !empty($tracking_options['googleanalytics_vimeo_progress75']) ? $tracking_options['googleanalytics_vimeo_progress75'] : '',
+    'videoPlayed'    => !empty($tracking_options['googleanalytics_vimeo_videoPlayed']) ? $tracking_options['googleanalytics_vimeo_videoPlayed'] : '',
+    'videoPaused'    => !empty($tracking_options['googleanalytics_vimeo_videoPaused']) ? $tracking_options['googleanalytics_vimeo_videoPaused'] : '',
+    'videoResumed'   => !empty($tracking_options['googleanalytics_vimeo_videoResumed']) ? $tracking_options['googleanalytics_vimeo_videoResumed'] : '',
+    'videoSeeking'   => !empty($tracking_options['googleanalytics_vimeo_videoSeeking']) ? $tracking_options['googleanalytics_vimeo_videoSeeking'] : '',
+    'videoCompleted' => !empty($tracking_options['googleanalytics_vimeo_videoCompleted']) ? $tracking_options['googleanalytics_vimeo_videoCompleted'] : '',
   );
 
   if ($google_analytics_vimeo_visibility_pages) {
