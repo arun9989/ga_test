@@ -47,8 +47,10 @@ function google_analytics_vimeo_requirements($phase) {
  * Implements hook_install().
  */
 function google_analytics_vimeo_install() {
-  $library = libraries_detect('vimeo.ga.js');
-  if (isset($library['error message'])) {
-    drupal_set_message($library['error message'], 'error');
+  if (\Drupal::moduleHandler()->moduleExists('libraries')) {
+    $library = libraries_detect('vimeo.ga.js');
+    if (isset($library['error message'])) {
+      drupal_set_message($library['error message'], 'error');
+    }
   }
 }
