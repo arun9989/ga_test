@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Google Analytics Vimeo Video Tracking Admin Settings Form.
- */
 
 namespace Drupal\google_analytics_vimeo\Form;
 
@@ -27,22 +23,22 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
     $config = \Drupal::config('google_analytics_vimeo.admin_settings');
     $form['googleanalytics_vimeo_tracking'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Select Tracking'),
+      '#title' => $this->t('Select Tracking'),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     );
     $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options'] = array(
       '#type' => 'checkboxes',
-      '#title' => t('Enable Tracking'),
+      '#title' => $this->t('Enable Tracking'),
       '#options' => array(
-        'googleanalytics_vimeo_progress25' => t('25% Progress'),
-        'googleanalytics_vimeo_progress50' => t('50% Progress'),
-        'googleanalytics_vimeo_progress75' => t('75% Progress'),
-        'googleanalytics_vimeo_videoPlayed' => t('Video Played'),
-        'googleanalytics_vimeo_videoPaused' => t('Video Paused'),
-        'googleanalytics_vimeo_videoResumed' => t('Video Resumed'),
-        'googleanalytics_vimeo_videoSeeking' => t('Video Seeking'),
-        'googleanalytics_vimeo_videoCompleted' => t('Video Completed'),
+        'googleanalytics_vimeo_progress25' => $this->t('25% Progress'),
+        'googleanalytics_vimeo_progress50' => $this->t('50% Progress'),
+        'googleanalytics_vimeo_progress75' => $this->t('75% Progress'),
+        'googleanalytics_vimeo_videoPlayed' => $this->t('Video Played'),
+        'googleanalytics_vimeo_videoPaused' => $this->t('Video Paused'),
+        'googleanalytics_vimeo_videoResumed' => $this->t('Video Resumed'),
+        'googleanalytics_vimeo_videoSeeking' => $this->t('Video Seeking'),
+        'googleanalytics_vimeo_videoCompleted' => $this->t('Video Completed'),
       ),
     );
     $form['googleanalytics_vimeo_tracking']['googleanalytics_vimeo_tracking_options']['#default_value'] = array_keys(array_filter($config->get('visibility.tracking_options')));
@@ -61,26 +57,26 @@ class GoogleAnalyticsVimeoAdminSettingsForm extends ConfigFormBase {
     }
     else {
       $options = array(
-        t('Every page except the listed pages'),
-        t('The listed pages only'),
+        $this->t('Every page except the listed pages'),
+        $this->t('The listed pages only'),
       );
-      $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array(
+      $description = $this->t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array(
         '%blog' => 'blog',
         '%blog-wildcard' => 'blog/*',
         '%front' => '<front>',
       ));
       if (\Drupal::moduleHandler()->moduleExists('php') && $php_access) {
-        $options[] = t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
-        $title = t('Pages or PHP code');
-        $description .= ' ' . t('If the PHP option is chosen, enter PHP code between %php. Note that executing incorrect PHP code can break your Drupal site.', array('%php' => '<?php ?>'));
+        $options[] = $this->t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
+        $title = $this->t('Pages or PHP code');
+        $description .= ' ' . $this->t('If the PHP option is chosen, enter PHP code between %php. Note that executing incorrect PHP code can break your Drupal site.', array('%php' => '<?php ?>'));
       }
       else {
-        $title = t('Pages');
+        $title = $this->t('Pages');
       }
     }
     $form['googleanalytics_vimeo_visibility_options'] = array(
       '#type' => 'radios',
-      '#title' => t('Add Google Analytics Vimeo Video Tracking to specific pages'),
+      '#title' => $this->t('Add Google Analytics Vimeo Video Tracking to specific pages'),
       '#options' => $options,
       '#default_value' => !empty($visibility_mode) ? $visibility_mode : 0,
     );
