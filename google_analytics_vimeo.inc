@@ -25,11 +25,11 @@ function google_analytics_vimeo_visibility_pages() {
     if (!empty($pages)) {
       // Convert path to lowercase. This allows comparison of the same path
       // with different case. Ex: /Page, /page, /PAGE.
-      $pages = Unicode::strtolower($pages);
+      $pages = mb_strtolower($pages);
       if ($visibility_mode < 2) {
         // Compare the lowercase path alias (if any) and internal path.
         $path = \Drupal::service('path.current')->getPath();
-        $path_alias = Unicode::strtolower(\Drupal::service('path.alias_manager')->getAliasByPath($path));
+        $path_alias = mb_strtolower(\Drupal::service('path_alias.manager')->getAliasByPath($path));
         $page_match = \Drupal::service('path.matcher')->matchPath($path_alias, $pages) ||
         (($path != $path_alias) && \Drupal::service('path.matcher')->matchPath($path, $pages));
         // When $visibility_mode has a value of 0, the tracking code is

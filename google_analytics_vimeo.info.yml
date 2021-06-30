@@ -3,7 +3,7 @@ description: A Google Analytics plugin for measuring Vimeo Player Events.
 configure:
 package: Statistics
 type: module
-core: 8.x
+core_version_requirement: ^8.8.0 || ^9.0
 dependencies:
-  - google_analytics
+    - google_analytics
 hidden: false
